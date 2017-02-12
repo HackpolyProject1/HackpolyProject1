@@ -1,16 +1,13 @@
 package com.example.project1.hackpolyproject1;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -33,7 +30,7 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
 
         if (noteId != -1) {
 
-            editText.setText(MainActivity.tasks.get(noteId));
+            editText.setText(TitlesActivity.tasks.get(noteId));
 
 
         }
@@ -60,8 +57,8 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
                 String note = editText.getText().toString();
                 sharedPreferences.edit().putString("note", note).apply();
 
-                MainActivity.arrayList.add(note);
-                MainActivity.arrayAdapter.notifyDataSetChanged();*/
+                LoginActivity.arrayList.add(note);
+                LoginActivity.arrayAdapter.notifyDataSetChanged();*/
                 // back button in action bar pressed, go to parent activity
                 this.finish();
                 return true;
@@ -78,25 +75,25 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        MainPage.tasks.set(noteId, String.valueOf(s));
-        MainPage.arrayAdapter.notifyDataSetChanged();
+        TitlesActivity.tasks.set(noteId, String.valueOf(s));
+        TitlesActivity.arrayAdapter.notifyDataSetChanged();
 
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.project1.hackpolyproject1", Context.MODE_PRIVATE);
 
-        if (MainPage.set == null) {
+        if (TitlesActivity.set == null) {
 
-            MainPage.set = new HashSet<String>();
+            TitlesActivity.set = new HashSet<String>();
 
         } else {
 
-            MainPage.set.clear();
+            TitlesActivity.set.clear();
 
         }
 
 
-        MainPage.set.addAll(MainPage.tasks);
+        TitlesActivity.set.addAll(TitlesActivity.tasks);
         sharedPreferences.edit().remove("notes").apply();
-        sharedPreferences.edit().putStringSet("notes", MainPage.set).apply();
+        sharedPreferences.edit().putStringSet("notes", TitlesActivity.set).apply();
 
 
     }

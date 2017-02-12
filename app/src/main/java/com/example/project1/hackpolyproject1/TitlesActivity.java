@@ -1,8 +1,6 @@
 package com.example.project1.hackpolyproject1;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,10 +15,9 @@ import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class MainPage extends AppCompatActivity {
+public class TitlesActivity extends AppCompatActivity {
 
     ListView listView;
     static String value;
@@ -35,7 +32,7 @@ public class MainPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main_page);
+        setContentView(R.layout.activity_titles);
         listView = (ListView) findViewById(R.id.listView);
         CreateList();
     }
@@ -44,7 +41,6 @@ public class MainPage extends AppCompatActivity {
         if (set != null){
             set.clear();
         }
-
 
 
     }
@@ -75,7 +71,7 @@ public class MainPage extends AppCompatActivity {
 
                 }
                 Toast.makeText(getApplicationContext(), String.valueOf(valuei), Toast.LENGTH_LONG).show();
-                Mvalue = (TextView) findViewById(R.id.textView3);
+
             }
 
             @Override
