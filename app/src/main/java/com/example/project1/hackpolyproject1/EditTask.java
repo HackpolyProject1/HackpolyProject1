@@ -33,7 +33,7 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
 
         if (noteId != -1) {
 
-            editText.setText(MainPage.tasks.get(noteId));
+            editText.setText(MainActivity.tasks.get(noteId));
 
 
         }
