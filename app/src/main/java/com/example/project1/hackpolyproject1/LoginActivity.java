@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                Log.d(TAG, user.toString());
+               // Log.d(TAG, user.toString());
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -152,8 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     // FirebaseUser.getToken() instead.
                     String uid = user.getUid();
 
-                //Intent i = new Intent(getApplicationContext(), TitlesActivity.class);
-                //startActivity(i);
+
                 }
             }
         });

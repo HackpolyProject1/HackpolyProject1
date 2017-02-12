@@ -21,8 +21,7 @@ public class TitlesActivity extends AppCompatActivity {
 
     ListView listView;
     static String value;
-    private Firebase Mref;
-    private TextView Mvalue;
+    public Firebase Mref;
     static ArrayList<String> tasks = new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
     static Set<String> set;
@@ -31,10 +30,10 @@ public class TitlesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
+        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_titles);
         listView = (ListView) findViewById(R.id.listView);
-        CreateList();
+        Firebase();
     }
 
     public void CreateList() {
