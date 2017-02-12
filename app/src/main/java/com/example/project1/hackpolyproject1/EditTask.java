@@ -8,15 +8,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+
 
 import java.util.HashSet;
 
 public class EditTask extends AppCompatActivity implements TextWatcher {
 
+
     int noteId;
+    TitlesActivity titles = new TitlesActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,7 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
         TitlesActivity.set.addAll(TitlesActivity.tasks);
         sharedPreferences.edit().remove("notes").apply();
         sharedPreferences.edit().putStringSet("notes", TitlesActivity.set).apply();
+        titles.ChangeValues(noteId);
 
 
     }

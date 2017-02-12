@@ -3,6 +3,7 @@ package com.example.project1.hackpolyproject1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
@@ -21,7 +23,7 @@ public class TitlesActivity extends AppCompatActivity {
 
     ListView listView;
     static String value;
-    public Firebase Mref;
+    static public Firebase Mref;
     static ArrayList<String> tasks = new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
     static Set<String> set;
@@ -33,11 +35,19 @@ public class TitlesActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_titles);
         listView = (ListView) findViewById(R.id.listView);
+
         Firebase();
+
+    }
+    public void ChangeValues(int s){
+        Mref = new Firebase("https://hackpoly-project.firebaseio.com/tasks/current/");
+        Mref.child(s+"/title").setValue(tasks.get(s));
+
     }
 
     public void Firebase(){
         Mref = new Firebase("https://hackpoly-project.firebaseio.com/tasks/current/");
+        Log.d("Testing Change", Mref.child("0/title").toString());
         com.firebase.client.ValueEventListener valueEventListener = Mref.addValueEventListener(new com.firebase.client.ValueEventListener() {
             @Override
             public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
@@ -62,7 +72,7 @@ public class TitlesActivity extends AppCompatActivity {
 
 
                 }
-                Toast.makeText(getApplicationContext(), String.valueOf(valuei), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), String.valueOf(valuei), Toast.LENGTH_LONG).show();
 
             }
 
@@ -78,18 +88,11 @@ public class TitlesActivity extends AppCompatActivity {
         String insert = value;
         Intent i = getIntent();
 
-        //if (set != null) {
 
-        //  tasks.addAll(set);
-//            Toast.makeText(getApplicationContext(), "I Ran Null", Toast.LENGTH_SHORT).show();
-
-        //      } else {
-        //Toast.makeText(getApplicationContext(), "I Ran Else", Toast.LENGTH_SHORT).show();
         tasks.add(insert);
         set = new HashSet<String>();
         set.addAll(tasks);
 
-//        }
 
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tasks);
         listView.setAdapter(arrayAdapter);
@@ -102,6 +105,7 @@ public class TitlesActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), EditTask.class);
                 i.putExtra("noteId", position);
                 startActivity(i);
+
 
             }
 

@@ -1,8 +1,10 @@
 package com.example.project1.hackpolyproject1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.lang.reflect.Array;
 
 
 //import static com.example.project1.hackpolyproject1.R.styleable.Toolbar;
@@ -127,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 catch (Exception e)
                 {
+
                     e.printStackTrace();
                 }
 
