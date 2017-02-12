@@ -105,24 +105,29 @@ public class LoginActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    createAccount(email.getText().toString(), password.getText().toString());
 
-                createAccount(email.getText().toString(),password.getText().toString());
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        // Name, email address, and profile photo Url
+                        String name = user.getDisplayName();
+                        String email = user.getEmail();
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    // Name, email address, and profile photo Url
-                    String name = user.getDisplayName();
-                    String email = user.getEmail();
+                        // Check if user's email is verified
+                        boolean emailVerified = user.isEmailVerified();
 
-                    // Check if user's email is verified
-                    boolean emailVerified = user.isEmailVerified();
-
-                    // The user's ID, unique to the Firebase project. Do NOT use this value to
-                    // authenticate with your backend server, if you have one. Use
-                    // FirebaseUser.getToken() instead.
-                    String uid = user.getUid();
-                } else {
-                    Log.d(TAG, "user=null");
+                        // The user's ID, unique to the Firebase project. Do NOT use this value to
+                        // authenticate with your backend server, if you have one. Use
+                        // FirebaseUser.getToken() instead.
+                        String uid = user.getUid();
+                    } else {
+                        Log.d(TAG, "user=null");
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
 
                 //Intent i = new Intent(getApplicationContext(), TitlesActivity.class);
@@ -135,24 +140,29 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    signIn(email.getText().toString(), password.getText().toString());
 
-                signIn(email.getText().toString(), password.getText().toString());
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        // Name, email address, and profile photo Url
+                        String name = user.getDisplayName();
+                        String email = user.getEmail();
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    // Name, email address, and profile photo Url
-                    String name = user.getDisplayName();
-                    String email = user.getEmail();
+                        // Check if user's email is verified
+                        boolean emailVerified = user.isEmailVerified();
 
-                    // Check if user's email is verified
-                    boolean emailVerified = user.isEmailVerified();
-
-                    // The user's ID, unique to the Firebase project. Do NOT use this value to
-                    // authenticate with your backend server, if you have one. Use
-                    // FirebaseUser.getToken() instead.
-                    String uid = user.getUid();
+                        // The user's ID, unique to the Firebase project. Do NOT use this value to
+                        // authenticate with your backend server, if you have one. Use
+                        // FirebaseUser.getToken() instead.
+                        String uid = user.getUid();
 
 
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
         });

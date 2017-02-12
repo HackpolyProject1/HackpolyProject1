@@ -36,13 +36,6 @@ public class TitlesActivity extends AppCompatActivity {
         Firebase();
     }
 
-    public void CreateList() {
-        if (set != null){
-            set.clear();
-        }
-
-
-    }
     public void Firebase(){
         Mref = new Firebase("https://hackpoly-project.firebaseio.com/tasks/current/");
         com.firebase.client.ValueEventListener valueEventListener = Mref.addValueEventListener(new com.firebase.client.ValueEventListener() {
