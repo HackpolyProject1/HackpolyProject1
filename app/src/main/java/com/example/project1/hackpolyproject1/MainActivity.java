@@ -39,10 +39,9 @@ public class MainActivity extends AppCompatActivity {
     final String TAG = "TEST";
 
     ListView listView;
+    MainPage mainpage = new MainPage();
     static ArrayAdapter<String> arrayAdapter;
-    static String value;
-    private Firebase Mref;
-    private TextView Mvalue;
+
     static ArrayList<String> tasks = new ArrayList<>();
     static Set<String> set;
 
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent i = new Intent(getApplicationContext(), MainPage.class);
                 //startActivity(i);
-                Firebase();
+                mainpage.Firebase();
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
@@ -148,195 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Firebase(){
-        Mref = new Firebase("https://hackpoly-project.firebaseio.com/tasks/current/");
-        com.firebase.client.ValueEventListener valueEventListener = Mref.addValueEventListener(new com.firebase.client.ValueEventListener() {
-            @Override
-            public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
 
 
-                long valuei = dataSnapshot.getChildrenCount();
-
-                Toast.makeText(getApplicationContext(), String.valueOf(valuei), Toast.LENGTH_SHORT).show();
-
-
-
-                if (tasks != null) {
-                    tasks.clear();
-                }
-                if (set != null) {
-                    set.clear();
-                }
-                for (int i = 0; i < valuei; i++) {
-                    value = dataSnapshot.child(Integer.toString(i) + "/title").getValue().toString();
-
-                    Listitup();
-
-
-                }
-                Toast.makeText(getApplicationContext(), String.valueOf(valuei), Toast.LENGTH_LONG).show();
-                Mvalue = (TextView) findViewById(R.id.textView3);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        //launch activity on button click;
-        Button signUp = (Button) findViewById(R.id.button_singup);
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                createAccount(email.getText().toString(),password.getText().toString());
-
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    // Name, email address, and profile photo Url
-                    String name = user.getDisplayName();
-                    String email = user.getEmail();
-
-                    // Check if user's email is verified
-                    boolean emailVerified = user.isEmailVerified();
-
-                    // The user's ID, unique to the Firebase project. Do NOT use this value to
-                    // authenticate with your backend server, if you have one. Use
-                    // FirebaseUser.getToken() instead.
-                    String uid = user.getUid();
-                } else {
-                    Log.d(TAG, "user=null");
-                }
-
-                //Intent i = new Intent(getApplicationContext(), MainPage.class);
-                //startActivity(i);
-            }
-        });
-
-        //launch activity on button click
-        Button login = (Button) findViewById(R.id.button_login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                signIn(email.getText().toString(), password.getText().toString());
-
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    // Name, email address, and profile photo Url
-                    String name = user.getDisplayName();
-                    String email = user.getEmail();
-
-                    // Check if user's email is verified
-                    boolean emailVerified = user.isEmailVerified();
-
-                    // The user's ID, unique to the Firebase project. Do NOT use this value to
-                    // authenticate with your backend server, if you have one. Use
-                    // FirebaseUser.getToken() instead.
-                    String uid = user.getUid();
-
-                //Intent i = new Intent(getApplicationContext(), MainPage.class);
-                //startActivity(i);
-                }
-            }
-        });
-
-    }
-
-    private void createAccount(String email, final String password) {
-        Log.d(TAG, "createAccount:" + email);
-
-        // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.d(TAG, "create fail");
-                            CharSequence text = "The account could not be created: " + task.getException();
-                            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-                        } else {
-                            Log.d(TAG, "Success");
-                            Intent i = new Intent(getApplicationContext(), MainPage.class);
-                            startActivity(i);
-                        }
-
-                        // [START_EXCLUDE]
-
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END create_user_with_email]
-    }
-
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            CharSequence text = "Log on Unsuccessful: " + task.getException();
-                            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-                        } else {
-                            Log.d(TAG, "Success");
-                            Intent i = new Intent(getApplicationContext(), MainPage.class);
-                            startActivity(i);
-                        }
-                    }
-                });
-        // [END sign_in_with_email]
-    }
-
-    public void Listitup(){
-        setContentView(R.layout.activity_main_page);
-        String insert = value;
-        listView = (ListView) findViewById(R.id.listView);
-        Intent i = getIntent();
-
-        //if (set != null) {
-
-          //  tasks.addAll(set);
-//            Toast.makeText(getApplicationContext(), "I Ran Null", Toast.LENGTH_SHORT).show();
-
-  //      } else {
-            Toast.makeText(getApplicationContext(), "I Ran Else", Toast.LENGTH_SHORT).show();
-            tasks.add(insert);
-            set = new HashSet<String>();
-            set.addAll(tasks);
-
-//        }
-
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tasks);
-        listView.setAdapter(arrayAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent i = new Intent(getApplicationContext(), EditTask.class);
-                i.putExtra("noteId", position);
-                startActivity(i);
-
-            }
-
-        });
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
