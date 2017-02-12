@@ -11,16 +11,21 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.client.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.firebase.client.Firebase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-
+private Firebase Mref;
+    private TextView Mvalue;
 
     public class User {
 
@@ -45,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,22 +72,30 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //test to pull from main.
-        final DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Object value = dataSnapshot.getValue();
 
-                Log.d("Value", value.toString());
-            }
+        Mref = new Firebase("https://hackpoly-project.firebaseio.com/");
+                Mref.addValueEventListener(new com.firebase.client.ValueEventListener() {
+                    @Override
+                    public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
+                        String value = dataSnapshot.child("tasks/current/0/date").getValue().toString();
+
+                        Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG).show();
+                        Mvalue = (TextView) findViewById(R.id.textView3);
+                        Mvalue.setText(value);
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
         });
+
+
+
     }
 
     @Override
