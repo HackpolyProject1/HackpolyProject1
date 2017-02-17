@@ -194,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
                         } else {
                             Log.d(TAG, "Success");
-                            Intent i = new Intent(getApplicationContext(), TitlesActivity.class);
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
                         }
 
@@ -225,7 +225,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
                         } else {
                             Log.d(TAG, "Success");
-                            Intent i = new Intent(getApplicationContext(), TitlesActivity.class);
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
                         }
                     }

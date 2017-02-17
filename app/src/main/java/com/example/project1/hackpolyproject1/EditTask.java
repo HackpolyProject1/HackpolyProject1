@@ -20,7 +20,7 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
 
 
     int noteId;
-    TitlesActivity titles = new TitlesActivity();
+    MainActivity titles = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
 
         if (noteId != -1) {
 
-            editText.setText(TitlesActivity.tasks.get(noteId));
+            editText.setText(MainActivity.tasks.get(noteId));
 
 
         }
@@ -79,25 +79,25 @@ public class EditTask extends AppCompatActivity implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        TitlesActivity.tasks.set(noteId, String.valueOf(s));
-        TitlesActivity.arrayAdapter.notifyDataSetChanged();
+        MainActivity.tasks.set(noteId, String.valueOf(s));
+        MainActivity.arrayAdapter.notifyDataSetChanged();
 
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.project1.hackpolyproject1", Context.MODE_PRIVATE);
 
-        if (TitlesActivity.set == null) {
+        if (MainActivity.set == null) {
 
-            TitlesActivity.set = new HashSet<String>();
+            MainActivity.set = new HashSet<String>();
 
         } else {
 
-            TitlesActivity.set.clear();
+            MainActivity.set.clear();
 
         }
 
 
-        TitlesActivity.set.addAll(TitlesActivity.tasks);
+        MainActivity.set.addAll(MainActivity.tasks);
         sharedPreferences.edit().remove("notes").apply();
-        sharedPreferences.edit().putStringSet("notes", TitlesActivity.set).apply();
+        sharedPreferences.edit().putStringSet("notes", MainActivity.set).apply();
         titles.ChangeValues(noteId);
 
 
